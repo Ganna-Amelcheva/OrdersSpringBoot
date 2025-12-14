@@ -15,22 +15,22 @@ public class Dish {
     private double price;
     @Column(name="ingridients", nullable = false)
     private String ingridients;
+    @Column(name = "menu_section", nullable = false)
+    private String menuSection;
 
-    public Dish(String name, double price, String ingridients) {
+    public Dish(String name, double price, String ingridients, String menuSection) {
         this.name = name;
         this.price = price;
         this.ingridients = ingridients;
+        this.menuSection = menuSection;
     }
+
     public Dish(){
 
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -55,5 +55,13 @@ public class Dish {
 
     public void setIngridients(String ingridients) {
         this.ingridients = ingridients;
+    }
+
+    public String getMenuSection() {
+        return menuSection;
+    }
+
+    public void setMenuSection(String menuSection) {
+        this.menuSection = menuSection;
     }
 }
