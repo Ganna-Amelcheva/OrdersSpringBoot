@@ -4,7 +4,6 @@ package web.ordersspringboot.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import web.ordersspringboot.model.Dish;
@@ -32,5 +31,35 @@ public class MenuDao implements MenuDaoInterface {
         dishTypedQuery.setParameter("menuSection", menuSection);
        return entityManager.createQuery(sqlQuery, Dish.class).getResultList();
 
+    }
+    @Override
+    public void deleteDish(Long id){
+        if(entityManager.find(Dish.class, id)!=null)
+        entityManager.remove(entityManager.find(Dish.class, id));
+    }
+    @Override
+    public Dish createDish(Dish dish){
+        entityManager.persist(dish);
+        return dish;
+    }
+    @Override
+    public Dish updateDish(Dish dish, Long id){
+        if(entityManager.find(Dish.class, id)!=null)
+             return entityManager.merge(dish);
+        return null;
+    }
+    @Override
+    public Dish getDishById(Long id){
+        return entityManager.find(Dish.class, id);
+    }
+
+    @Override
+    public Dish patchDish(String name, Long id){
+        Dish dish = getDishById(id);
+        if(entityManager.find(Dish.class, id)!=null) {
+            dish.setName(name);
+            return entityManager.merge(dish);
+        }
+        return null;
     }
 }
